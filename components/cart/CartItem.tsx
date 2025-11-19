@@ -62,9 +62,10 @@ export default function CartItem({ item, onUpdate }: CartItemProps) {
   };
 
   const calculateItemPrice = () => {
-    let basePrice = item.selectedSize ? item.selectedSize.price : item.product.price;
+    const basePrice = item.product.price || 0;
+    const sizeExtra = item.selectedSize ? item.selectedSize.price : 0;
     const addonsPrice = (item.selectedAddons || []).reduce((sum, addon) => sum + addon.price, 0);
-    return (basePrice + addonsPrice) * item.quantity;
+    return (basePrice + sizeExtra + addonsPrice) * item.quantity;
   };
 
   const total = calculateItemPrice();
