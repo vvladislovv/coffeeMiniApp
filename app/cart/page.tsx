@@ -26,9 +26,13 @@ export default function CartPage() {
 
   const calculateSubtotal = () => {
     return cart.reduce((sum, item) => {
-      let itemPrice = item.selectedSize ? item.selectedSize.price : item.product.price;
-      const addonsPrice = (item.selectedAddons || []).reduce((addonSum, addon) => addonSum + addon.price, 0);
-      itemPrice += addonsPrice;
+      const basePrice = item.product.price || 0;
+      const sizeExtra = item.selectedSize ? item.selectedSize.price : 0;
+      const addonsPrice = (item.selectedAddons || []).reduce(
+        (addonSum, addon) => addonSum + addon.price,
+        0,
+      );
+      const itemPrice = basePrice + sizeExtra + addonsPrice;
       return sum + itemPrice * item.quantity;
     }, 0);
   };
