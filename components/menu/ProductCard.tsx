@@ -111,6 +111,8 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
     });
   };
 
+  const isAvailable = product.available !== false;
+
   return (
     <>
     <motion.div
@@ -122,7 +124,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
       >
         <div className="relative h-48 bg-gradient-to-br from-orange-100 to-pink-100 flex items-center justify-center">
           <span className="text-8xl">{product.emoji || '☕'}</span>
-        {!product.available && (
+        {!isAvailable && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
             <span className="text-white font-bold">Нет в наличии</span>
           </div>
@@ -170,7 +172,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
                 e.stopPropagation();
                   setShowModal(true);
               }}
-              disabled={!product.available}
+              disabled={!isAvailable}
               className="bg-gradient-to-r from-orange-500 to-pink-500 text-white p-2 rounded-full hover:scale-110 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-5 h-5" />
@@ -308,7 +310,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={handleAddToCartFromModal}
-              disabled={!product.available}
+              disabled={!isAvailable}
               className="w-full bg-gradient-to-r from-orange-500 to-pink-500 text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Добавить в корзину
